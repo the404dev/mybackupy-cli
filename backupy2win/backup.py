@@ -1,5 +1,5 @@
 import os, py7zr
-from datetime import datetime
+from date import Date
 class Backup:
     def __init__(self) -> None:
         pass
@@ -12,10 +12,8 @@ class Backup:
         
         os.chdir(r'C:\Backups')
 
-        now = datetime.now()
-        dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
-
-        with py7zr.SevenZipFile(f'{zip_filename}_{dt_string}.7z', 'w', password=os.environ['ENCRYPT']) as archive:
+        datetime = Date.get_current_date_and_time()
+        with py7zr.SevenZipFile(f'{zip_filename}_{datetime}.7z', 'w', password=os.environ['ENCRYPT']) as archive:
             print('Realizando backup...')
             print('Por favor aguarde...')
             archive.writeall(source_file, detination_name_path)
