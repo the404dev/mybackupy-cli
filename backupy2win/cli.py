@@ -42,7 +42,7 @@ class Cli:
 
             self.choise_menu_option(option)()    
 
-    def create_backup_folder(self):
+    def create_backup(self):
         print(Fore.YELLOW + '''
  -----------------------------
 | COMPRIMIR ARQUIVO DE BACKUP |
@@ -54,7 +54,7 @@ class Cli:
         self.insert_password()
         print('Digite um nome para o backup: ')
         self.name_backup = input(Fore.BLUE)
-        Backup.compress_backup('folder', self.name_backup, self.source_dir, self.name_backup, self.destination_dir, self.password)
+        Backup.compress_backup(self.name_backup, self.source_dir, self.name_backup, self.destination_dir, self.password)
 
     def insert_password(self):
         while True:
@@ -70,8 +70,8 @@ class Cli:
             else:
                 return self.password
     
-    def extract_backup_folder(self):
-        print(Fore.YELLOW + '''
+    def extract_backup(self):
+        print(Fore.YELLOW + ''' 
              ---------------------------
             | EXTRAIR ARQUIVO DE BACKUP |
              ---------------------------\n''')
@@ -85,7 +85,7 @@ class Cli:
 
     def choise_menu_option(self, option):
         options = {
-            1: self.create_backup_folder,
-            2: self.extract_backup_folder,
+            1: self.create_backup,
+            2: self.extract_backup,
         }
         return options.get(option)

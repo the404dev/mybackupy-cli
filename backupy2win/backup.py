@@ -5,10 +5,7 @@ from process import Process as proc
 
 class Backup:
 
-    def compress_backup(backup_type, zip_filename, source_file, detination_name_path_7zip, destination_backup_folder, password=None):
-        if backup_type == 'email':
-            proc.kill_process('thunderbird', 'outlook')
-            
+    def compress_backup(zip_filename, source_file, detination_name_path_7zip, destination_backup_folder, password=None):
         os.chdir(destination_backup_folder)
         datetime = Date.get_current_date_and_time()
         with py7zr.SevenZipFile(f'{zip_filename}_{datetime}.7z', 'w', password=password) as archive:
