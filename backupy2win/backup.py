@@ -6,12 +6,21 @@ from process import Process as proc
 class Backup:
 
     def compress_backup(zip_filename, source_file, detination_name_path_7zip, destination_backup_folder, password=None):
-        os.chdir(destination_backup_folder)
+        try:
+            os.chdir(destination_backup_folder)
+        except (FileNotFoundError, FileExistsError):
+            print(f'{Fore.RED}Caminho não encontrado! Verifique o caminho digitado!')
+            return
         datetime = Date.get_current_date_and_time()
+                
         with py7zr.SevenZipFile(f'{zip_filename}_{datetime}.7z', 'w', password=password) as archive:
             print(f'\n{Fore.YELLOW}Comprimindo backup... Por favor aguarde...\n')
-            archive.writeall(source_file, detination_name_path_7zip)
-            print(Fore.GREEN + 'compressão finalizada com sucesso!' + Style.RESET_ALL)
+            try:
+                archive.writeall(source_file, detination_name_path_7zip)
+                print(Fore.GREEN + 'compressão finalizada com sucesso!' + Style.RESET_ALL)
+            except FileNotFoundError:
+                print(f'{Fore.RED}Caminho não encontrado! Verifique o caminho digitado!')
+                return
     
     def extract_backup(self, source_backup_path, destination_backup_folder, password=None):
         try:
