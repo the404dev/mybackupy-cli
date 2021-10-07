@@ -16,19 +16,24 @@ class Backup:
             archive.writeall(source_file, detination_name_path_7zip)
             print(Fore.GREEN + 'compressão finalizada com sucesso!' + Style.RESET_ALL)
     
-    def decompress_backup(source_backup_path, destination_backup_folder, password=None):
+    def extract_backup(self, source_backup_path, destination_backup_folder, password=None):
         try:
             archive = py7zr.SevenZipFile(source_backup_path, password=password)
-            print(f'{Fore.YELLOW}Descomprimindo backup... Por favor aguarde...')
-            archive.extractall(path=destination_backup_folder)
-        except py7zr.exceptions.PasswordRequired:
-            print(f'{Fore.RED}Necessária senha para descompactar')
-            archive.close()
+            try:
+                print(f'{Fore.YELLOW}Extraindo backup... Por favor aguarde...')
+                archive.extractall(path=destination_backup_folder)
+            
+            except py7zr.exceptions.PasswordRequired:
+                print(f'{Fore.RED}Necessária senha para descompactar')
+                return
+            except:
+                print(f'{Fore.RED}Senha incorreta!')
+                return
+            finally:
+                archive.close()
+            print('Finalizado com sucesso!')
+            print(f'Arquivo disponível em: {destination_backup_folder}')
+        except FileNotFoundError:
+            print(f'{Fore.RED}Caminho não encontrado! Verifique o caminho digitado!')
             return
-        except:
-            print(f'{Fore.RED}Senha incorreta!')
-            archive.close()
-            return
-        print('Finalizado com sucesso!')
-        print(f'Arquivo disponível em: {destination_backup_folder}')
-        archive.close()
+            
