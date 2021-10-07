@@ -1,12 +1,11 @@
 from getpass import getpass
-from colors import Color
 from art import text2art
 from backup import Backup
 
 
 class Cli:
     def __init__(self):
-        print(Color.INFO + text2art('backupy2win') + Color.RESET)
+        print(text2art('backupy2win'))
         self.start_cli()
 
     def start_cli(self):
@@ -21,10 +20,10 @@ class Cli:
     def create_backup_folder(self):
         print('Digite ou cole o endereço do diretorio para realizar o backup: ')
         self.source_dir = input()
-        print(Color.INFO + self.source_dir + Color.RESET)
+        print(self.source_dir)
         print('Digite ou cole o diretório de destino do backup: ')
         self.destination_dir = input()
-        print(Color.INFO + self.source_dir + Color.RESET)
+        print(self.source_dir)
         self.insert_password()
         print('Digite um nome para o backup: ')
         self.name_backup = input()
