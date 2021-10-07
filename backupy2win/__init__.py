@@ -1,5 +1,4 @@
 from backup import Backup
-from art import text2art
+from cli import Cli
 
-Art = text2art('backupy2win')
-print(Art)
+cli = Cli()
