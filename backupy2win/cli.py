@@ -13,15 +13,31 @@ class Cli:
 
     def start_cli(self):
         print(Fore.BLUE + '''
-                ---------------------------------------------
-                BEM VINDO AO UTILITÁRO DE BACKUP PARA WINDOWS
-                ---------------------------------------------\n''')
-        self.init_menu()
+ -----------------------------------------------
+| BEM VINDO AO UTILITÁRO DE BACKUP PARA WINDOWS |
+ -----------------------------------------------\n''')
+        while True:
+            print(Fore.WHITE + '''
+ -------------------
+| ESCOLHA UMA OPÇÃO |
+ -------------------
+            ''')
+            print(Fore.YELLOW + '''
+ -----------------
+| 1) FAZER BACKUP |
+ -----------------
+ ---------------------
+| 2) RESTAURAR BACKUP |
+ ---------------------
+            ''')
+            input()
 
-    def init_menu(self):
-        self.create_backup_folder()
     
     def create_backup_folder(self):
+        print(Fore.YELLOW + '''
+ -----------------------------
+| COMPRIMIR ARQUIVO DE BACKUP |
+ -----------------------------\n''')
         print('Digite ou cole o endereço do diretorio para realizar o backup: ')
         self.source_dir = input(Fore.BLUE)
         print(f'{Style.RESET_ALL}Digite ou cole o diretório de destino do backup: ')
