@@ -1,3 +1,4 @@
+from typing import Match
 from art import text2art
 from backup import Backup
 from colorama import Fore, Style
@@ -12,6 +13,7 @@ class Cli:
         self.start_cli()
 
     def start_cli(self):
+        option = 0
         print(Fore.BLUE + '''
  -----------------------------------------------
 | BEM VINDO AO UTILITÁRO DE BACKUP PARA WINDOWS |
@@ -23,6 +25,10 @@ class Cli:
  -------------------
             ''')
             print(Fore.YELLOW + '''
+
+ -------------------
+| 0) PARA FINALIZAR |
+ -------------------
  -----------------
 | 1) FAZER BACKUP |
  -----------------
@@ -30,7 +36,12 @@ class Cli:
 | 2) RESTAURAR BACKUP |
  ---------------------
             ''')
-            input()
+            option = int(input())
+            if option == 0:
+                print(f'{Fore.BLUE}Finalizado.')
+                break
+
+            self.choise_menu_option(option)()    
 
     
     def create_backup_folder(self):
@@ -74,3 +85,10 @@ class Cli:
         self.password = getpass()
         Backup.extract_backup(self.source_backup, self.destination_backup, self.password)
         return
+
+    def choise_menu_option(self, option):
+        options = {
+            1: self.create_backup_folder,
+            2: self.extract_backup_folder,
+        }
+        return options.get(option)
