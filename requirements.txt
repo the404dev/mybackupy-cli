@@ -2,6 +2,7 @@ art==5.3
 bcj-cffi==0.5.1
 Brotli==1.0.9
 cffi==1.14.6
+colorama==0.4.4
 multivolumefile==0.2.3
 py7zr==0.16.1
 pycparser==2.20
