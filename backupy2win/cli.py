@@ -60,6 +60,17 @@ class Cli:
                 print(f'\n{Fore.RED}Senhas não conferem!\n')
             else:
                 return self.password
-                break
-        
-        
+    
+    def extract_backup_folder(self):
+        print(Fore.YELLOW + '''
+             ---------------------------
+            | EXTRAIR ARQUIVO DE BACKUP |
+             ---------------------------\n''')
+        print('Digite o endereço do backup incluindo o nome do arquivo: ')
+        self.source_backup = input(Fore.BLUE)
+        print(f'{Style.RESET_ALL}Digite o destino para extrair o backup:')
+        self.destination_backup = input(Fore.BLUE)
+        print(f'{Style.RESET_ALL} Digite a senha para extrair o arquivo - Deixe em branco se não possuir')
+        self.password = getpass()
+        Backup.extract_backup(self.source_backup, self.destination_backup, self.password)
+        return
