@@ -25,7 +25,6 @@ class Cli:
  -------------------
             ''')
             print(Fore.YELLOW + '''
-
  -------------------
 | 0) PARA FINALIZAR |
  -------------------
@@ -43,7 +42,6 @@ class Cli:
 
             self.choise_menu_option(option)()    
 
-    
     def create_backup_folder(self):
         print(Fore.YELLOW + '''
  -----------------------------
@@ -84,7 +82,6 @@ class Cli:
         print(f'{Style.RESET_ALL} Digite a senha para extrair o arquivo - Deixe em branco se não possuir')
         self.password = getpass()
         Backup.extract_backup(self.source_backup, self.destination_backup, self.password)
-        return
 
     def choise_menu_option(self, option):
         options = {
