@@ -1,9 +1,10 @@
-from typing import Match
 from art import text2art
 from backup import Backup
 from colorama import Fore, Style
 from getpass import getpass
 import colorama
+from process import Process as process
+
 
 
 class Cli:
@@ -28,19 +29,22 @@ class Cli:
  -------------------
 | 0) PARA FINALIZAR |
  -------------------
- -----------------
-| 1) FAZER BACKUP |
- -----------------
+ --------------------------
+| 1) FAZER BACKUP DE PASTA |
+ --------------------------
+ ---------------------------
+| 2) FAZER BACKUP DE E-MAIL |
+ ---------------------------
  ---------------------
-| 2) RESTAURAR BACKUP |
+| 3) RESTAURAR BACKUP |
  ---------------------
             ''')
             option = int(input())
             if option == 0:
                 print(f'{Fore.BLUE}Finalizado.')
                 break
-
-            self.choise_menu_option(option)()    
+            
+            self.choise_menu_option(option)() 
 
     def create_backup(self):
         print(Fore.YELLOW + '''
@@ -83,9 +87,14 @@ class Cli:
         self.password = getpass()
         Backup.extract_backup(self.source_backup, self.destination_backup, self.password)
 
+    def create_backup_email(self):
+        process.kill_process('thunderbird','outlook')
+        self.create_backup()
+
     def choise_menu_option(self, option):
         options = {
             1: self.create_backup,
-            2: self.extract_backup,
+            2: self.create_backup_email,
+            3: self.extract_backup,
         }
         return options.get(option)

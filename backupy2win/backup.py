@@ -1,7 +1,6 @@
 from colorama import Fore, Style, Back
 from date import Date
 import os, py7zr
-from process import Process as proc
 
 class Backup:
 
