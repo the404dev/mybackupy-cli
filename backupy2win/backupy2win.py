@@ -5,6 +5,9 @@ from datetime import datetime
 from getpass import getpass
 import os
 
+THUNDERBIRD_PATH=os.path.expanduser('~') + '\AppData\Roaming\Thunderbird'
+OUTLOOK_PATH=os.path.expanduser('~') + '\Documents\Arquivos do Outlook'
+
 class Process:
     def kill_process(*args):
         for title in args:
@@ -92,6 +95,8 @@ class Cli:
             if option == 0:
                 print(f'{Fore.BLUE}Finalizado.')
                 break
+            elif option > 3 or option < 0:
+                print(Fore.RED + 'Opção inválida!')
             
             self.choise_menu_option(option)() 
 
@@ -102,9 +107,20 @@ class Cli:
  -----------------------------\n''')
         self.source_dir = self.ask_the_question('Digite ou cole o endereço do diretorio para realizar o backup: ')
         self.destination_dir = self.ask_the_question('Digite ou cole o diretório de destino do backup: ')
-        self.insert_password()
+        self.password = self.insert_password()
         self.name_backup = self.ask_the_question('Digite um nome para o backup: ')
         Backup.compress_backup(self.name_backup, self.source_dir, self.name_backup, self.destination_dir, self.password)
+    
+    def create_backup_email(self):
+        self.email_name = self.select_email()
+        self.destination_dir = self.ask_the_question('Digite ou cole o diretório de destino do backup: ')
+        self.password = self.insert_password()
+        self.name_backup = self.email_name
+        Process.kill_process(self.email_name)
+        if(self.email_name == 'thunderbird'):
+            Backup.compress_backup(self.name_backup, THUNDERBIRD_PATH, self.name_backup, self.destination_dir, self.password)
+        else:
+            Backup.compress_backup(self.name_backup, OUTLOOK_PATH, self.name_backup, self.destination_dir, self.password)
 
     def insert_password(self):
         while True:
@@ -127,13 +143,9 @@ class Cli:
              ---------------------------\n''')
         self.source_backup = self.ask_the_question('Digite o endereço do backup incluindo o nome do arquivo: ')
         self.destination_backup = self.ask_the_question('Digite o destino para extrair o backup:')
-        print('Digite a senha para extrair o arquivo - Deixe em branco se não possuir')
         self.password = self.insert_password()
         Backup.extract_backup(self.source_backup, self.destination_backup, self.password)
 
-    def create_backup_email(self):
-        Process.kill_process('thunderbird','outlook')
-        self.create_backup()
 
     def choise_menu_option(self, option):
         options = {
@@ -148,7 +160,24 @@ class Cli:
         self.response = input(Fore.BLUE)
         print(Style.RESET_ALL)
         return self.response
-        
+    
+    def select_email(self):
+        while True:
+            print(Fore.YELLOW +'''
+ ------------
+| 1) OUTLOOK |
+ ------------
+ ----------------
+| 2) THUNDERBIRD |
+ ----------------
+            ''')
+            option = int(input(Fore.RESET))
+            if option == 1:
+                return 'outlook'
+            elif option == 2:
+                return 'thunderbird'
+            else:
+                print(Fore.RED + 'Opção inválida!')
 
 def main():
     Cli()
