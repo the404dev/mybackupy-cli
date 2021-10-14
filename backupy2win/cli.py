@@ -1,12 +1,60 @@
 from art import text2art
-from backup import Backup
+import colorama, os, py7zr
 from colorama import Fore, Style
+from datetime import datetime
 from getpass import getpass
-import colorama
-from process import Process as process
+import os
 
+class Process:
+    def kill_process(*args):
+        for title in args:
+            os.system(f'taskkill /f /im {title}.exe')
 
+class Date:
+    def get_current_date_and_time():
+        now = datetime.now()
+        str_datetime = now.strftime("%d_%m_%Y_%H_%M_%S")
+        return str_datetime
+class Backup:
 
+    def compress_backup(zip_filename, source_file, detination_name_path_7zip, destination_backup_folder, password=None):
+        try:
+            os.chdir(destination_backup_folder)
+        except (FileNotFoundError, FileExistsError):
+            print(f'{Fore.RED}Caminho não encontrado! Verifique o caminho digitado!')
+            return
+        datetime = Date.get_current_date_and_time()
+                
+        with py7zr.SevenZipFile(f'{zip_filename}_{datetime}.7z', 'w', password=password) as archive:
+            print(f'\n{Fore.YELLOW}Comprimindo backup... Por favor aguarde...\n')
+            try:
+                archive.writeall(source_file, detination_name_path_7zip)
+                print(Fore.GREEN + 'compressão finalizada com sucesso!' + Style.RESET_ALL)
+            except FileNotFoundError:
+                print(f'{Fore.RED}Caminho não encontrado! Verifique o caminho digitado!')
+                return
+    
+    def extract_backup(self, source_backup_path, destination_backup_folder, password=None):
+        try:
+            archive = py7zr.SevenZipFile(source_backup_path, password=password)
+            try:
+                print(f'{Fore.YELLOW}Extraindo backup... Por favor aguarde...')
+                archive.extractall(path=destination_backup_folder)
+            
+            except py7zr.exceptions.PasswordRequired:
+                print(f'{Fore.RED}Necessária senha para descompactar')
+                return
+            except:
+                print(f'{Fore.RED}Senha incorreta!')
+                return
+            finally:
+                archive.close()
+            print('Finalizado com sucesso!')
+            print(f'Arquivo disponível em: {destination_backup_folder}')
+        except FileNotFoundError:
+            print(f'{Fore.RED}Caminho não encontrado! Verifique o caminho digitado!')
+            return
+            
 class Cli:
     def __init__(self):
         colorama.init(autoreset=True)
@@ -88,7 +136,7 @@ class Cli:
         Backup.extract_backup(self.source_backup, self.destination_backup, self.password)
 
     def create_backup_email(self):
-        process.kill_process('thunderbird','outlook')
+        Process.kill_process('thunderbird','outlook')
         self.create_backup()
 
     def choise_menu_option(self, option):
@@ -98,3 +146,9 @@ class Cli:
             3: self.extract_backup,
         }
         return options.get(option)
+
+def main():
+    Cli()
+
+if __name__ == "__main__":
+    main()
