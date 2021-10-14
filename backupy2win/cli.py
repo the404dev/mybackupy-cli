@@ -15,6 +15,7 @@ class Date:
         now = datetime.now()
         str_datetime = now.strftime("%d_%m_%Y_%H_%M_%S")
         return str_datetime
+
 class Backup:
 
     def compress_backup(zip_filename, source_file, detination_name_path_7zip, destination_backup_folder, password=None):
@@ -99,13 +100,10 @@ class Cli:
  -----------------------------
 | COMPRIMIR ARQUIVO DE BACKUP |
  -----------------------------\n''')
-        print('Digite ou cole o endereço do diretorio para realizar o backup: ')
-        self.source_dir = input(Fore.BLUE)
-        print(f'{Style.RESET_ALL}Digite ou cole o diretório de destino do backup: ')
-        self.destination_dir = input(Fore.BLUE)
+        self.source_dir = self.ask_the_question('Digite ou cole o endereço do diretorio para realizar o backup: ')
+        self.destination_dir = self.ask_the_question('Digite ou cole o diretório de destino do backup: ')
         self.insert_password()
-        print('Digite um nome para o backup: ')
-        self.name_backup = input(Fore.BLUE)
+        self.name_backup = self.ask_the_question('Digite um nome para o backup: ')
         Backup.compress_backup(self.name_backup, self.source_dir, self.name_backup, self.destination_dir, self.password)
 
     def insert_password(self):
@@ -127,12 +125,10 @@ class Cli:
              ---------------------------
             | EXTRAIR ARQUIVO DE BACKUP |
              ---------------------------\n''')
-        print('Digite o endereço do backup incluindo o nome do arquivo: ')
-        self.source_backup = input(Fore.BLUE)
-        print(f'{Style.RESET_ALL}Digite o destino para extrair o backup:')
-        self.destination_backup = input(Fore.BLUE)
-        print(f'{Style.RESET_ALL} Digite a senha para extrair o arquivo - Deixe em branco se não possuir')
-        self.password = getpass()
+        self.source_backup = self.ask_the_question('Digite o endereço do backup incluindo o nome do arquivo: ')
+        self.destination_backup = self.ask_the_question('Digite o destino para extrair o backup:')
+        print('Digite a senha para extrair o arquivo - Deixe em branco se não possuir')
+        self.password = self.insert_password()
         Backup.extract_backup(self.source_backup, self.destination_backup, self.password)
 
     def create_backup_email(self):
@@ -146,6 +142,13 @@ class Cli:
             3: self.extract_backup,
         }
         return options.get(option)
+    
+    def ask_the_question(self, question):
+        print(Fore.YELLOW + question)
+        self.response = input(Fore.BLUE)
+        print(Style.RESET_ALL)
+        return self.response
+        
 
 def main():
     Cli()
