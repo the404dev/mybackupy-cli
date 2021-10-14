@@ -13,18 +13,21 @@ class Process:
         for title in args:
             os.system(f'taskkill /f /im {title}.exe')
 
+
 class Date:
     def get_current_date_and_time():
         now = datetime.now()
         str_datetime = now.strftime("%d_%m_%Y_%H_%M_%S")
         return str_datetime
 
+
+
 class Backup:
 
     def compress_backup(zip_filename, source_file, detination_name_path_7zip, destination_backup_folder, password=None):
         try:
             os.chdir(destination_backup_folder)
-        except (FileNotFoundError, FileExistsError):
+        except (FileNotFoundError, FileExistsError, OSError, Exception):
             print(f'{Fore.RED}Caminho não encontrado! Verifique o caminho digitado!')
             return
         datetime = Date.get_current_date_and_time()
@@ -37,6 +40,7 @@ class Backup:
             except FileNotFoundError:
                 print(f'{Fore.RED}Caminho não encontrado! Verifique o caminho digitado!')
                 return
+
     
     def extract_backup(self, source_backup_path, destination_backup_folder, password=None):
         try:
@@ -58,15 +62,21 @@ class Backup:
         except FileNotFoundError:
             print(f'{Fore.RED}Caminho não encontrado! Verifique o caminho digitado!')
             return
+
             
 class Cli:
     def __init__(self):
+        self.welcome()
+        self.start_cli()
+    
+
+    def welcome(self):
         colorama.init(autoreset=True)
         print(Fore.GREEN + text2art('backupy2win'))
-        self.start_cli()
+
 
     def start_cli(self):
-        option = 0
+        option = None
         print(Fore.BLUE + '''
  -----------------------------------------------
 | BEM VINDO AO UTILITÁRO DE BACKUP PARA WINDOWS |
@@ -91,14 +101,17 @@ class Cli:
 | 3) RESTAURAR BACKUP |
  ---------------------
             ''')
-            option = int(input())
-            if option == 0:
-                print(f'{Fore.BLUE}Finalizado.')
-                break
-            elif option > 3 or option < 0:
-                print(Fore.RED + 'Opção inválida!')
-            
-            self.choise_menu_option(option)() 
+            option = input()
+            try:
+                option = int(option)
+                if option == 0:
+                    print(f'{Fore.BLUE}Finalizado.')
+                    break
+                self.choise_menu_option(option)()
+            except (ValueError, TypeError):
+                print(f'{Fore.RED}Verifique o valor digitado!')
+ 
+
 
     def create_backup(self):
         print(Fore.YELLOW + '''
@@ -171,13 +184,18 @@ class Cli:
 | 2) THUNDERBIRD |
  ----------------
             ''')
-            option = int(input(Fore.RESET))
-            if option == 1:
-                return 'outlook'
-            elif option == 2:
-                return 'thunderbird'
-            else:
-                print(Fore.RED + 'Opção inválida!')
+            option = input(Fore.RESET)
+            try:
+                option = int(option)
+                if option == 1:
+                    return 'outlook'
+                elif option == 2:
+                    return 'thunderbird'
+                else:
+                    print(Fore.RED + 'Opção inválida!')
+            except Exception:
+                print(f'{Fore.RED}Opção inválida!')
+            
 
 def main():
     Cli()
