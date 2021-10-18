@@ -3,14 +3,9 @@ from art import text2art
 import colorama, os, py7zr
 from colorama import Fore, Style
 from datetime import datetime
-from getpass import getpass
+from getpass import getpass, getuser
 import os
 from PyInquirer import prompt
-
-THUNDERBIRD_PATH=os.path.expanduser('~') + '\AppData\Roaming\Thunderbird'
-OUTLOOK_PATH=os.path.expanduser('~') + '\Documents\Arquivos do Outlook'
-
-
 
 backup_folder = [
     {
@@ -39,7 +34,7 @@ def compress_backup(zip_filename, source_file, detination_name_path_7zip, destin
     except (FileNotFoundError, FileExistsError, OSError, Exception):
         print(f'{Fore.RED}Caminho não encontrado! Verifique o caminho digitado!')
         return
-    datetime = Date.get_current_date_and_time()
+    datetime = get_current_date_and_time()
             
     with py7zr.SevenZipFile(f'{zip_filename}_{datetime}.7z', 'w', password=password) as archive:
         print(f'\n{Fore.YELLOW}Comprimindo backup... Por favor aguarde...\n')
@@ -51,7 +46,7 @@ def compress_backup(zip_filename, source_file, detination_name_path_7zip, destin
             return
 
 
-def extract_backup(self, source_backup_path, destination_backup_folder, password=None):
+def extract_backup(source_backup_path, destination_backup_folder, password=None):
     try:
         archive = py7zr.SevenZipFile(source_backup_path, password=password)
         try:
@@ -75,7 +70,7 @@ def extract_backup(self, source_backup_path, destination_backup_folder, password
         
 class Cli:
     def __init__(self):
-        self.welcome()
+        self.welcome()    
         self.start_cli()
     
 
@@ -86,7 +81,7 @@ class Cli:
 
     def start_cli(self):   
         while True:     
-            print(f'{Fore.BLUE}BEM VINDO AO UTILITÁRO DE BACKUP PARA WINDOWS\n')
+            print(f'{Fore.BLUE}Bem vindo ao utiliario de backup!\n')
             response = prompt(self.main_menu())
             keys = list(response.keys())  
             if "finalizar" in keys:
@@ -94,10 +89,6 @@ class Cli:
                 break
             
     def create_backup(self):
-        print(Fore.YELLOW + '''
- -----------------------------
-| COMPRIMIR ARQUIVO DE BACKUP |
- -----------------------------\n''')
         self.source_dir = self.ask_the_question('Digite ou cole o endereço do diretorio para realizar o backup: ')
         self.destination_dir = self.ask_the_question('Digite ou cole o diretório de destino do backup: ')
         self.password = self.insert_password()
@@ -105,12 +96,15 @@ class Cli:
         compress_backup(self.name_backup, self.source_dir, self.name_backup, self.destination_dir, self.password)
     
     def create_backup_email(self):
-        self.email_name = self.select_email()
+        THUNDERBIRD_PATH= "C:/Users/"+getuser()+"/AppData/Roaming/Thunderbird"
+        OUTLOOK_PATH= "C:/Users/"+getuser()+"Documents/Arquivos do Outlook"
+
+        self.email_name = prompt(self.select_email())
         self.destination_dir = self.ask_the_question('Digite ou cole o diretório de destino do backup: ')
         self.password = self.insert_password()
-        self.name_backup = self.email_name
-        kill_process(self.email_name)
-        if(self.email_name == 'thunderbird'):
+        self.name_backup = self.email_name['email_select']
+        kill_process(self.name_backup)
+        if(self.name_backup == 'thunderbird'):
             compress_backup(self.name_backup, THUNDERBIRD_PATH, self.name_backup, self.destination_dir, self.password)
         else:
             compress_backup(self.name_backup, OUTLOOK_PATH, self.name_backup, self.destination_dir, self.password)
@@ -129,11 +123,7 @@ class Cli:
             else:
                 return self.password
     
-    def extract_backup(self):
-        print(Fore.YELLOW + ''' 
-             ---------------------------
-            | EXTRAIR ARQUIVO DE BACKUP |
-             ---------------------------\n''')
+    def extract_backup_cli(self):
         self.source_backup = self.ask_the_question('Digite o endereço do backup incluindo o nome do arquivo: ')
         self.destination_backup = self.ask_the_question('Digite o destino para extrair o backup:')
         self.password = self.insert_password()
@@ -144,7 +134,7 @@ class Cli:
         options = {
             'backup de pasta': self.create_backup,
             'backup de e-mail': self.create_backup_email,
-            'extrair backup': self.extract_backup,
+            'extrair backup': self.extract_backup_cli,
             'finalizar': print
         }
         return options.get(option)
@@ -162,7 +152,7 @@ class Cli:
             'name': 'finalizar',
             'message': 'Escolha uma opção de backup:',
             'choices': ['backup de pasta', 'backup de e-mail', 'extrair backup', 'finalizar'],
-            'filter': lambda i: self.choise_menu_error(i) ,
+            'filter': lambda i: self.choise_menu_error(i),
             'default': 'finalizar'
             }
         ]
@@ -175,26 +165,13 @@ class Cli:
 
 
     def select_email(self):
-        while True:
-            print(Fore.YELLOW +'''
- ------------
-| 1) OUTLOOK |
- ------------
- ----------------
-| 2) THUNDERBIRD |
- ----------------
-            ''')
-            option = input(Fore.RESET)
-            try:
-                option = int(option)
-                if option == 1:
-                    return 'outlook'
-                elif option == 2:
-                    return 'thunderbird'
-                else:
-                    print(Fore.RED + 'Opção inválida!')
-            except Exception:
-                print(f'{Fore.RED}Opção inválida!')
+        return {
+            'type': 'list',
+            'name': 'email_select',
+            'message': 'Selecione de qual e-mail deseja fazer backup:',
+            'choices': ['outlook', 'thunderbird'],
+            'filter': lambda option:option,
+        }
             
 
 def main():
