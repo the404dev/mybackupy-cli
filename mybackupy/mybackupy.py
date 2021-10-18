@@ -7,14 +7,6 @@ from getpass import getpass, getuser
 import os
 from PyInquirer import prompt
 
-backup_folder = [
-    {
-        'type': 'input',
-        'name': 'first_name',
-        'message': 'What\'s your first name',
-    }
-]
- 
 
 def kill_process(*args):
     for title in args:
@@ -88,6 +80,7 @@ class Cli:
                 print(f'{Fore.BLUE}Finalizado.')
                 break
             
+
     def create_backup(self):
         self.source_dir = self.ask_the_question('Digite ou cole o endereço do diretorio para realizar o backup: ')
         self.destination_dir = self.ask_the_question('Digite ou cole o diretório de destino do backup: ')
@@ -95,6 +88,7 @@ class Cli:
         self.name_backup = self.ask_the_question('Digite um nome para o backup: ')
         compress_backup(self.name_backup, self.source_dir, self.name_backup, self.destination_dir, self.password)
     
+
     def create_backup_email(self):
         THUNDERBIRD_PATH= "C:/Users/"+getuser()+"/AppData/Roaming/Thunderbird"
         OUTLOOK_PATH= "C:/Users/"+getuser()+"Documents/Arquivos do Outlook"
@@ -108,6 +102,7 @@ class Cli:
             compress_backup(self.name_backup, THUNDERBIRD_PATH, self.name_backup, self.destination_dir, self.password)
         else:
             compress_backup(self.name_backup, OUTLOOK_PATH, self.name_backup, self.destination_dir, self.password)
+
 
     def insert_password(self):
         while True:
@@ -123,6 +118,7 @@ class Cli:
             else:
                 return self.password
     
+
     def extract_backup_cli(self):
         self.source_backup = self.ask_the_question('Digite o endereço do backup incluindo o nome do arquivo: ')
         self.destination_backup = self.ask_the_question('Digite o destino para extrair o backup:')
@@ -139,11 +135,13 @@ class Cli:
         }
         return options.get(option)
 
+
     def ask_the_question(self, question):
         print(Fore.YELLOW + question)
         self.response = input(Fore.BLUE)
         print(Style.RESET_ALL)
         return self.response
+    
     
     def main_menu(self):
         return [
