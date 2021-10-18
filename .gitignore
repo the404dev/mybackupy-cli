@@ -1,4 +1,2 @@
 ENV/
 __pycache__
-.pypirc
-dist/
