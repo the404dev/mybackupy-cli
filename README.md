@@ -1,6 +1,6 @@
-# BACKUPY2WIN
+# MyBackupy
 
-Crie backups facilmente no windows
+Crie backups facilmente
 
 **Projeto desenvolvido para automatizar backups de arquivos e pastas em arquivos `7ZIP` de fácil recuperação**
 
