@@ -74,9 +74,8 @@ class Cli:
     def start_cli(self):   
         while True:     
             print(f'{Fore.BLUE}Bem vindo ao utiliario de backup!\n')
-            response = prompt(self.main_menu())
-            keys = list(response.keys())  
-            if "finalizar" in keys:
+            response = prompt(self.main_menu())  
+            if response['menu_principal'] == 'finalizar':
                 print(f'{Fore.BLUE}Finalizado.')
                 break
             
@@ -131,7 +130,6 @@ class Cli:
             'backup de pasta': self.create_backup,
             'backup de e-mail': self.create_backup_email,
             'extrair backup': self.extract_backup_cli,
-            'finalizar': print
         }
         return options.get(option)
 
@@ -147,7 +145,7 @@ class Cli:
         return [
             {
             'type': 'list',
-            'name': 'finalizar',
+            'name': 'menu_principal',
             'message': 'Escolha uma opção de backup:',
             'choices': ['backup de pasta', 'backup de e-mail', 'extrair backup', 'finalizar'],
             'filter': lambda i: self.choise_menu_error(i),
@@ -157,9 +155,8 @@ class Cli:
     
 
     def choise_menu_error(self, option):
-        try:
-            self.choise_menu_option(option)() 
-        except Exception: print(Fore.RED + 'finalizado')
+        try: self.choise_menu_option(option)() 
+        except Exception:  return option
 
 
     def select_email(self):
