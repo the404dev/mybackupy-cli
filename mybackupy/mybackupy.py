@@ -68,7 +68,7 @@ class Cli:
 
     def welcome(self):
         colorama.init(autoreset=True)
-        print(Fore.GREEN + text2art('backupy2win'))
+        print(Fore.GREEN + text2art('mybackupy'))
 
 
     def start_cli(self):   
@@ -142,7 +142,7 @@ class Cli:
         print(Style.RESET_ALL)
         return self.response
     
-    
+
     def main_menu(self):
         return [
             {
