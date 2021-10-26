@@ -4,7 +4,7 @@ from backup import Backup
 from colorama import Fore, Style
 from constants import THUNDERBIRD_PATH, OUTLOOK_PATH
 from getpass import getpass
-from process import Process
+from process import kill_process
 from PyInquirer import prompt  
 
 class Cli:
@@ -39,7 +39,7 @@ class Cli:
         self.destination_dir = self.ask_the_question('Digite ou cole o diretório de destino do backup: ')
         self.password = self.insert_password()
         self.name_backup = self.email_name['email_select']
-        Process.kill_process(self.name_backup)
+        kill_process(self.name_backup)
         if(self.name_backup == 'thunderbird'):
             Backup.compress_backup(self.name_backup, THUNDERBIRD_PATH, self.name_backup, self.destination_dir, self.password)
         else:
