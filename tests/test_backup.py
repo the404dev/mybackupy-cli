@@ -10,8 +10,13 @@ class ProcessTest(TestCase):
 
     def test_compress_backup(self):
         backup = Backup()
-        backup.compress_backup(TEST_NAME_BACKUP, TEST_SOURCE_PATH_BACKUP, TEST_DESTINATION_PATH_BACKUP)
-        
+        compress = backup.compress_backup(
+            TEST_NAME_BACKUP,
+            TEST_SOURCE_PATH_BACKUP,
+            TEST_DESTINATION_PATH_BACKUP
+        )
+              
+        self.assertTrue(compress)
     
     def tearDown(self) -> None:
         return super().tearDown()
