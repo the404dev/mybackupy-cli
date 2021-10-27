@@ -35,7 +35,7 @@ class Cli:
 
     def create_backup_email(self):
         self.email_name = self.select_email()
-        self.destination_dir = self.ask_the_question('Digite ou cole o diretório de destino do backup: ')
+        self.destination_dir = self.ask_the_question_path('Digite ou cole o diretório de destino do backup: ')
         self.password = self.insert_password()
         self.name_backup = self.email_name
         kill_process(self.name_backup)
