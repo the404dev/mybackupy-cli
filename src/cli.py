@@ -26,23 +26,23 @@ class Cli:
             
 
     def create_backup(self):
-        self.source_dir = self.ask_the_question('Digite ou cole o endereço do diretorio para realizar o backup: ')
-        self.destination_dir = self.ask_the_question('Digite ou cole o diretório de destino do backup: ')
+        self.source_dir = self.ask_the_question_path('Digite ou cole o endereço do diretorio para realizar o backup: ')
+        self.destination_dir = self.ask_the_question_path('Digite ou cole o diretório de destino do backup: ')
         self.password = self.insert_password()
         self.name_backup = self.ask_the_question('Digite um nome para o backup: ')
-        Backup.compress_backup(self.name_backup, self.source_dir, self.name_backup, self.destination_dir, self.password)
+        Backup.compress_backup(self, self.name_backup, self.source_dir, self.destination_dir, self.password)
     
 
     def create_backup_email(self):
-        self.email_name = prompt(self.select_email())
+        self.email_name = self.select_email()
         self.destination_dir = self.ask_the_question('Digite ou cole o diretório de destino do backup: ')
         self.password = self.insert_password()
-        self.name_backup = self.email_name['email_select']
+        self.name_backup = self.email_name
         kill_process(self.name_backup)
         if(self.name_backup == 'thunderbird'):
-            Backup.compress_backup(self.name_backup, THUNDERBIRD_PATH, self.name_backup, self.destination_dir, self.password)
+            Backup.compress_backup(self, self.name_backup, THUNDERBIRD_PATH, self.destination_dir, self.password)
         else:
-            Backup.compress_backup(self.name_backup, OUTLOOK_PATH, self.name_backup, self.destination_dir, self.password)
+            Backup.compress_backup(self, self.name_backup, OUTLOOK_PATH, self.destination_dir, self.password)
 
 
     def insert_password(self):
@@ -61,10 +61,10 @@ class Cli:
     
 
     def extract_backup_cli(self):
-        self.source_backup = self.ask_the_question('Digite o endereço do backup incluindo o nome do arquivo: ')
-        self.destination_backup = self.ask_the_question('Digite o destino para extrair o backup:')
+        self.source_backup = self.ask_the_question_path('Digite o endereço do backup incluindo o nome do arquivo: ')
+        self.destination_backup = self.ask_the_question_path('Digite o destino para extrair o backup:')
         self.password = self.insert_password()
-        Backup.extract_backup(self.source_backup, self.destination_backup, self.password)
+        Backup.extract_backup(self, self.source_backup, self.destination_backup, self.password)
 
 
     def choise_menu_option(self, option):
@@ -82,7 +82,7 @@ class Cli:
         return self.response
 
     def ask_the_question_path(self, question):
-        return prompt.query(question, default='/usr/local/bin/', validators=[validators.PathValidator()])
+        return prompt.query(question, default='C:/Backups', validators=[validators.PathValidator()])
     
 
     def main_menu(self):
@@ -98,11 +98,10 @@ class Cli:
 
 
     def select_email(self):
-        return {
-            'type': 'list',
-            'name': 'email_select',
-            'message': 'Selecione de qual e-mail deseja fazer backup:',
-            'choices': ['outlook', 'thunderbird'],
-            'filter': lambda option:option,
-        }
+        print('Bem vindo ao utiliario de backup!\n')
+        email_options = [
+                {'selector':'1','prompt':'Outlook','return':'outlook'},
+                {'selector':'2','prompt':'Thunderbird','return':'thunderbird'}
+        ]
+        return prompt.options("Selecione o cliente de e-mail", email_options)
    
