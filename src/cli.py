@@ -1,7 +1,6 @@
 from __future__ import print_function, unicode_literals
 from art import text2art
 from src.backup import Backup
-from colorama import Fore, Style
 from src.constants import THUNDERBIRD_PATH, OUTLOOK_PATH
 from getpass import getpass
 from src.process import kill_process
@@ -14,15 +13,15 @@ class Cli:
     
 
     def welcome(self):
-        print(Fore.GREEN + text2art('mybackupy'))
+        print(text2art('mybackupy'))
 
 
     def start_cli(self):   
         while True:     
-            print(f'{Fore.BLUE}Bem vindo ao utiliario de backup!\n')
+            print('Bem vindo ao utiliario de backup!\n')
             response = prompt(self.main_menu())  
             if response['menu_principal'] == 'finalizar':
-                print(f'{Fore.BLUE}Finalizado.')
+                print(f'Finalizado.')
                 break
             
 
@@ -48,7 +47,7 @@ class Cli:
 
     def insert_password(self):
         while True:
-            print(f'{Style.RESET_ALL}Digite a senha para backup - Pressione Enter para deixar em branco')
+            print('Digite a senha para backup - Pressione Enter para deixar em branco')
             self.password = getpass()
             if self.password == '':
                 self.password = None
@@ -56,7 +55,7 @@ class Cli:
             print('Digite novamente a senha para backup')
             self.repeat_password = getpass()
             if self.password != self.repeat_password:
-                print(f'\n{Fore.RED}Senhas não conferem!\n')
+                print('\nSenhas não conferem!\n')
             else:
                 return self.password
     
@@ -78,9 +77,8 @@ class Cli:
 
 
     def ask_the_question(self, question):
-        print(Fore.YELLOW + question)
-        self.response = input(Fore.BLUE)
-        print(Style.RESET_ALL)
+        print(question)
+        self.response = input()
         return self.response
     
 
