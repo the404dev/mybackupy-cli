@@ -29,7 +29,7 @@ class Cli:
         self.source_dir = self.ask_the_question_path('Digite ou cole o endereço do diretorio para realizar o backup: ')
         self.destination_dir = self.ask_the_question_path('Digite ou cole o diretório de destino do backup: ')
         self.password = self.insert_password()
-        self.name_backup = self.ask_the_question('Digite um nome para o backup: ')
+        self.name_backup = prompt.query('Digite um nome para o backup: ')
         Backup.compress_backup(self, self.name_backup, self.source_dir, self.destination_dir, self.password)
     
 
@@ -76,13 +76,8 @@ class Cli:
         return options.get(option)
 
 
-    def ask_the_question(self, question):
-        print(question)
-        self.response = input()
-        return self.response
-
     def ask_the_question_path(self, question):
-        return prompt.query(question, default='C:/Backups', validators=[validators.PathValidator()])
+        return prompt.query(question, validators=[validators.PathValidator()])
     
 
     def main_menu(self):
