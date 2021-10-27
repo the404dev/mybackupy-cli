@@ -1,10 +1,10 @@
 from __future__ import print_function, unicode_literals
 from art import text2art
-from backup import Backup
+from src.backup import Backup
 from colorama import Fore, Style
-from constants import THUNDERBIRD_PATH, OUTLOOK_PATH
+from src.constants import THUNDERBIRD_PATH, OUTLOOK_PATH
 from getpass import getpass
-from process import kill_process
+from src.process import kill_process
 from PyInquirer import prompt  
 
 class Cli:

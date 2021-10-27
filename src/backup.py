@@ -1,5 +1,5 @@
 from colorama import Fore, Style
-from date import Date
+from src.date import Date
 import os
 import py7zr
 
@@ -12,7 +12,7 @@ class Backup:
             return
         datetime = Date.get_current_date_and_time()
                 
-        with py7zr.SevenZipFile(f'{name}_{datetime}.7z', 'w', password=password) as archive:
+        with py7zr.SevenZipFile(f'{str(name).lower()}_{datetime}.7z', 'w', password=password) as archive:
             print(f'\n{Fore.YELLOW}Comprimindo backup... Por favor aguarde...\n')
             try:
                 archive.writeall(source_path, name)
