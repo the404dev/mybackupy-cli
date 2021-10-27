@@ -6,5 +6,4 @@ def main():
     Cli()
 
 if __name__ == "__main__":
-    bkp = Backup()
-    bkp.compress_backup(TEST_NAME_BACKUP, TEST_SOURCE_PATH_BACKUP, TEST_DESTINATION_PATH_BACKUP)
+    main()
