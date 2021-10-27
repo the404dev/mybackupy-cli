@@ -18,6 +18,7 @@ class Cli:
 
     def start_cli(self):   
         while True:     
+            print('Bem vindo ao utiliario de backup!\n')
             response = self.main_menu()
             if response == 'exit':
                 print('Finalizado.')
@@ -81,7 +82,6 @@ class Cli:
     
 
     def main_menu(self):
-        print('Bem vindo ao utiliario de backup!\n')
         inst_options = [
                 {'selector':'1','prompt':'Realizar backup de pasta','return':'folder_backup'},
                 {'selector':'2','prompt':'Realizar backup de e-mail','return':'email_backup'},
