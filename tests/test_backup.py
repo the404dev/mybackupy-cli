@@ -18,5 +18,17 @@ class ProcessTest(TestCase):
               
         self.assertTrue(compress)
     
+    def test_extract_backup(self):
+        backup = Backup()
+
+        backup.compress_backup(
+            TEST_NAME_BACKUP,
+            TEST_SOURCE_PATH_BACKUP,
+            TEST_DESTINATION_PATH_BACKUP
+        )
+        extract = backup.extract_backup(backup.filename, TEST_DESTINATION_PATH_BACKUP)
+
+        self.assertTrue(extract)
+    
     def tearDown(self) -> None:
         return super().tearDown()
