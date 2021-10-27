@@ -11,7 +11,7 @@ class Backup:
         try:
             os.chdir(destination_path)
         except (FileNotFoundError, FileExistsError, OSError, Exception):
-            print('Caminho não encontrado! Verifique o caminho digitado!')
+            print('Verifique o caminho digitado!')
             return False
         datetime = Date.get_current_date_and_time()
         self.filename = f'{name}_{datetime}.7z'
@@ -22,7 +22,7 @@ class Backup:
                 archive.writeall(source_path, name)
                 print('Compressão finalizada com sucesso!')
                 return True
-            except FileNotFoundError:
+            except (FileNotFoundError, ValueError):
                 print('Caminho não encontrado! Verifique o caminho digitado!')
                 return False
 
