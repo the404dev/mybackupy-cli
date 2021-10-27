@@ -1,10 +1,10 @@
 from __future__ import print_function, unicode_literals
 from art import text2art
+from clint.textui import prompt, validators
 from src.backup import Backup
 from src.constants import THUNDERBIRD_PATH, OUTLOOK_PATH
 from getpass import getpass
 from src.process import kill_process
-from PyInquirer import prompt  
 
 class Cli:
     def __init__(self):
@@ -18,11 +18,11 @@ class Cli:
 
     def start_cli(self):   
         while True:     
-            print('Bem vindo ao utiliario de backup!\n')
-            response = prompt(self.main_menu())  
-            if response['menu_principal'] == 'finalizar':
-                print(f'Finalizado.')
+            response = self.main_menu()
+            if response == 'exit':
+                print('Finalizado.')
                 break
+            self.choise_menu_option(response)()
             
 
     def create_backup(self):
@@ -69,9 +69,9 @@ class Cli:
 
     def choise_menu_option(self, option):
         options = {
-            'backup de pasta': self.create_backup,
-            'backup de e-mail': self.create_backup_email,
-            'extrair backup': self.extract_backup_cli,
+            'folder_backup': self.create_backup,
+            'email_backup': self.create_backup_email,
+            'restore_backup': self.extract_backup_cli,
         }
         return options.get(option)
 
@@ -80,24 +80,21 @@ class Cli:
         print(question)
         self.response = input()
         return self.response
+
+    def ask_the_question_path(self, question):
+        return prompt.query(question, default='/usr/local/bin/', validators=[validators.PathValidator()])
     
 
     def main_menu(self):
-        return [
-            {
-            'type': 'list',
-            'name': 'menu_principal',
-            'message': 'Escolha uma opção de backup:',
-            'choices': ['backup de pasta', 'backup de e-mail', 'extrair backup', 'finalizar'],
-            'filter': lambda i: self.choise_menu_error(i),
-            'default': 'finalizar'
-            }
+        print('Bem vindo ao utiliario de backup!\n')
+        inst_options = [
+                {'selector':'1','prompt':'Realizar backup de pasta','return':'folder_backup'},
+                {'selector':'2','prompt':'Realizar backup de e-mail','return':'email_backup'},
+                {'selector':'3','prompt':'Recuperar backup','return':'restore_backup'},
+                {'selector':'4','prompt':'Finalizar','return':'exit'}
         ]
-    
 
-    def choise_menu_error(self, option):
-        try: self.choise_menu_option(option)() 
-        except Exception:  return option
+        return prompt.options("Selecione uma opção", inst_options)
 
 
     def select_email(self):
