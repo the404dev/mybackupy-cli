@@ -93,7 +93,6 @@ class Cli:
 
 
     def select_email(self):
-        print('Bem vindo ao utiliario de backup!\n')
         email_options = [
                 {'selector':'1','prompt':'Outlook','return':'outlook'},
                 {'selector':'2','prompt':'Thunderbird','return':'thunderbird'}
