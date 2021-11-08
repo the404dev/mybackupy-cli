@@ -7,7 +7,7 @@ OUTLOOK_PATH= "C:/Users/"+getuser()+"Documents/Arquivos do Outlook"
 
 """ Tests """
 TEST_NAME_BACKUP="test"
-TEST_SOURCE_PATH_BACKUP="C:/Users/"+getuser()+"/Pictures"
+TEST_SOURCE_PATH_BACKUP="C:/Tests"
 TEST_DESTINATION_PATH_BACKUP="C:/Backups"
 TEST_PASSWORD="1234"
 
