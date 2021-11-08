@@ -24,7 +24,7 @@ jobs:
         pip install -r requirements.txt
         
     - name: Create Folders To Tests
-      run: cd C:/ && mkdir Backups && mkdir Tests && cd Tests && copy NUL > test.txt && cd C:/
+      run: cd C:/ && mkdir Backups && mkdir Tests && cd C:/
     - name: Test
       run: pytest
    
