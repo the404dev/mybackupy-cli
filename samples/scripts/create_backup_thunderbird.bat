@@ -1,0 +1,1 @@
+mybackupy.exe thunderbird -d C:/Tests -n email@email.com
