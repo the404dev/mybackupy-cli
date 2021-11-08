@@ -1,5 +1,8 @@
 from setuptools import setup, find_packages
 
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+
 setup(
     name='MyBackupy',
     version='1.0.0b0',
@@ -10,5 +13,9 @@ setup(
     package_dir={"": "."},
     packages=find_packages(where="src"),
     console=['mybackupy.py'],
+    entry_points = ''' 
+        [console_scripts] 
+        mybackupy = mybackupy:main 
+    ''', 
     tests_require=['pytest'],
 )
