@@ -24,7 +24,11 @@ jobs:
         pip install -r requirements.txt
         
     - name: Create Folders To Tests
-      run: cd C:/ && mkdir Backups && mkdir Tests && cd C:/
+      run: 
+        cd C:/ 
+        md Backups Tests
+        md C:/Users/Test/AppData/Roaming/Thunderbird
+        md "C:/Users/Test/Documents/Arquivos do Outlook"
     - name: Test
       run: pytest
    
