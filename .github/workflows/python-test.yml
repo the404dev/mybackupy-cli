@@ -26,7 +26,8 @@ jobs:
     - name: Create Folders To Tests
       run: 
         cd C:/ &&
-        md Backups Tests && 
+        md Backups &&
+        md Tests && 
         md C:/Users/Test/AppData/Roaming/Thunderbird && 
         md C:/Users/Test/Documents/Arquivos do Outlook
     - name: Test
