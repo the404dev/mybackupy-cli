@@ -1,4 +1,6 @@
+from src.constants import OUTLOOK, THUNDERBIRD
 from src.date import Date
+from src.process import kill_process
 import os
 import py7zr
 
@@ -10,6 +12,7 @@ class Backup:
     def compress_backup(self, name, source_path, destination_path, password=None):
         try:
             os.chdir(destination_path)
+            kill_process(OUTLOOK, THUNDERBIRD)
         except (FileNotFoundError, FileExistsError, OSError, Exception):
             print('Verifique o caminho digitado!')
             return False

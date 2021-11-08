@@ -1,9 +1,11 @@
 from getpass import getuser
 import os
 
-""" Windows path"""
+""" Windows """
 THUNDERBIRD_PATH= "C:/Users/"+getuser()+"/AppData/Roaming/Thunderbird"
 OUTLOOK_PATH= "C:/Users/"+getuser()+"/Documents/Arquivos do Outlook"
+THUNDERBIRD = 'thunderbird'
+OUTLOOK = 'outlook'
 
 """ Tests """
 TEST_NAME_BACKUP="test"

@@ -1,5 +1,5 @@
 from __future__ import print_function, unicode_literals
-import argparse, os
+import argparse
 from art import text2art
 from src.backup import Backup
 from src.constants import *
@@ -62,8 +62,8 @@ class Cli:
     def check_args(self):
         if self.args.command == 'backup': self.compress_backup(self.args.source)
         elif self.args.command == 'extract': self.extract_backup()
-        elif self.args.command == 'thunderbird': self.compress_backup(THUNDERBIRD_PATH)
-        elif self.args.command == 'outlook': self.compress_backup(OUTLOOK_PATH)
+        elif self.args.command == THUNDERBIRD: self.compress_backup(THUNDERBIRD_PATH)
+        elif self.args.command == OUTLOOK: self.compress_backup(OUTLOOK_PATH)
         else: self.parser.print_help()
 
 
