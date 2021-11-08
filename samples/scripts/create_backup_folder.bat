@@ -1,0 +1,1 @@
+mybackupy.exe backup -s C:/Tests -d C:/Backups -n Test -p STRONG_PASSWORD
