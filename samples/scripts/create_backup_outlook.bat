@@ -1,1 +1,0 @@
-mybackupy.exe outlook -d C:/Tests -n email@email.com
