@@ -62,8 +62,8 @@ class Cli:
     def check_args(self):
         if self.args.command == 'backup': self.compress_backup(self.args.source)
         elif self.args.command == 'extract': self.extract_backup()
-        elif self.args.command == 'thunderbird': self.extract_backup(THUNDERBIRD_PATH)
-        elif self.args.command == 'outlook': self.extract_backup(OUTLOOK_PATH)
+        elif self.args.command == 'thunderbird': self.compress_backup(THUNDERBIRD_PATH)
+        elif self.args.command == 'outlook': self.compress_backup(OUTLOOK_PATH)
         else: self.parser.print_help()
 
 

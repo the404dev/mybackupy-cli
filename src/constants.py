@@ -3,7 +3,7 @@ import os
 
 """ Windows path"""
 THUNDERBIRD_PATH= "C:/Users/"+getuser()+"/AppData/Roaming/Thunderbird"
-OUTLOOK_PATH= "C:/Users/"+getuser()+"Documents/Arquivos do Outlook"
+OUTLOOK_PATH= "C:/Users/"+getuser()+"/Documents/Arquivos do Outlook"
 
 """ Tests """
 TEST_NAME_BACKUP="test"
