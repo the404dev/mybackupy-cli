@@ -1,1 +1,0 @@
-mybackupy.exe extract -s C:/Backups/Test_08_11_2021_11_13_14.7z -d C:/Tests

@@ -1,5 +1,5 @@
-from src.cli import Cli
-from src.constants import *
+from mybackupy.cli import Cli
+from mybackupy.constants import *
 from unittest import TestCase
 
 class ProcessTest(TestCase):

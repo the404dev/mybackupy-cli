@@ -1,5 +1,5 @@
-from src.backup import Backup
-from src.constants import TEST_NAME_BACKUP, TEST_SOURCE_PATH_BACKUP, TEST_DESTINATION_PATH_BACKUP, TEST_PASSWORD
+from mybackupy.backup import Backup
+from mybackupy.constants import TEST_NAME_BACKUP, TEST_SOURCE_PATH_BACKUP, TEST_DESTINATION_PATH_BACKUP, TEST_PASSWORD
 from unittest import TestCase
 
 class ProcessTest(TestCase):

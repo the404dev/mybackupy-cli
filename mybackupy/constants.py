@@ -1,5 +1,4 @@
 from getpass import getuser
-import os
 
 """ Windows """
 THUNDERBIRD_PATH= "C:/Users/"+getuser()+"/AppData/Roaming/Thunderbird"
@@ -14,8 +13,7 @@ TEST_DESTINATION_PATH_BACKUP="C:/Backups"
 TEST_PASSWORD="1234"
 
 """ Version """
-version_file = open((f'{os.getcwd()}\VERSION'))
-VERSION=version_file.read().strip()
+VERSION='1.0.0b0'
 
 """ CLI """
 CLI_NAME="MyBackupy"
