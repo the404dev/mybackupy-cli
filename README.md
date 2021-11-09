@@ -14,3 +14,5 @@ ___
 ```
 pip install -i https://test.pypi.org/simple/ mybackupy
 ```
+## Uso
+![image](https://user-images.githubusercontent.com/31896473/140936695-dc8b5993-b29e-40c1-bd7a-f9e5744584f4.png)
