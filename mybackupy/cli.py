@@ -1,8 +1,8 @@
 from __future__ import print_function, unicode_literals
 import argparse
 from art import text2art
-from src.backup import Backup
-from src.constants import *
+from mybackupy.backup import Backup
+from mybackupy.constants import *
 
 class Cli:
     def __init__(self):

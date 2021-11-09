@@ -1,6 +1,6 @@
-from src.constants import OUTLOOK, THUNDERBIRD
-from src.date import Date
-from src.process import kill_process
+from mybackupy.constants import OUTLOOK, THUNDERBIRD
+from mybackupy.date import Date
+from mybackupy.process import kill_process
 import os
 import py7zr
 

@@ -1,5 +1,4 @@
 from getpass import getuser
-import os
 
 """ Windows """
 THUNDERBIRD_PATH= "C:/Users/"+getuser()+"/AppData/Roaming/Thunderbird"
