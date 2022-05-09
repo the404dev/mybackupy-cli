@@ -8,7 +8,7 @@ setup(
     version='1.0.0b0',
     description='Easily create and recover backups. MyBackupy compresses the contents of your folders into 7zip files for easy recovery.',
     author='Cristian Penteado',
-    author_email='contato@cristianpdev.com',
+    author_email='cristianpenteado@pm.me',
     url='https://github.com/cristianpdev/MyBackupy/',
     long_description = long_description,
     long_description_content_type = "text/markdown",
